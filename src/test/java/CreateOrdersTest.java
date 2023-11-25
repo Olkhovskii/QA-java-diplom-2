@@ -20,11 +20,19 @@ public class CreateOrdersTest {
     private Credentials credentials;
 
     @Before
+    @Step("Начало - создание пользователя")
     public void setUp() {
         credentials = new Credentials(Data.LOGIN, Data.PASSWORD);
         createAccount = new CreateAccount();
         createOrder = new CreateOrder();
     }
+
+    @After
+    @Step("Завершение - удаляем созданного пользователя")
+    public void tearDown() {
+        userAPI.delete(authToken, UserCredentials.user);
+    }
+    
     @Test
     @DisplayName("Создание заказа с авторизацией")
     public void CreateOrderSuccessTest(){
