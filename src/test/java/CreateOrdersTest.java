@@ -35,7 +35,7 @@ public class CreateOrdersTest {
         ValidatableResponse response1 = createOrder.createOrder(token,order);
         int statusCode = response1.extract().statusCode();
         response1.assertThat().body("success", is(true));
-        assertEquals("Order don't create",SC_OK,statusCode);
+        assertEquals(statusCode,"Order don't create",SC_OK);
     }
     @Test
     @DisplayName("Создание зааза без авторизации")
@@ -45,7 +45,7 @@ public class CreateOrdersTest {
         ValidatableResponse response = createOrder.createOrderWithoutToken(order);
         int statusCode = response.extract().statusCode();
         response.assertThat().body("success", is(true));
-        assertEquals("Order don't create",SC_OK,statusCode);
+        assertEquals(statusCode,"Order don't create",SC_OK);
     }
     @Test
     @DisplayName("Создание заказа без ингридиентов")
@@ -56,7 +56,7 @@ public class CreateOrdersTest {
         ValidatableResponse response1 = createOrder.createOrder(token,order);
         int statusCode = response1.extract().statusCode();
         response1.assertThat().body("success", is(false)).and().body("message",equalTo("Ingredient ids must be provided"));
-        assertEquals("Order don't create",SC_BAD_REQUEST,statusCode);
+        assertEquals(statusCode,"Order don't create",SC_BAD_REQUEST);
     }
     @Test
     @DisplayName("Создание заказа без авторизацией и с неверным хешем ингредиентов")
@@ -65,6 +65,6 @@ public class CreateOrdersTest {
         Orders order = new Orders(ingredients);
         ValidatableResponse response1 = createOrder.createOrder("",order);
         int statusCode = response1.extract().statusCode();
-        assertEquals("Order don't create",SC_INTERNAL_SERVER_ERROR,statusCode);
+        assertEquals(statusCode,"Order don't create",SC_INTERNAL_SERVER_ERROR);
     }
 }
